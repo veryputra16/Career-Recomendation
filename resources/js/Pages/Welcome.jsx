@@ -1,6 +1,8 @@
-import { Head } from '@inertiajs/react';
+import { Head, Link, usePage } from '@inertiajs/react';
 
 export default function Welcome({ appName, laravelVersion, phpVersion }) {
+    const { auth } = usePage().props;
+
     const techStack = [
         { name: 'Backend', value: `Laravel ${laravelVersion}`, status: 'Connected' },
         { name: 'Runtime', value: `PHP ${phpVersion}`, status: 'Active' },
@@ -8,9 +10,11 @@ export default function Welcome({ appName, laravelVersion, phpVersion }) {
         { name: 'Frontend', value: 'React 19 + Vite', status: 'Mounted' },
     ];
 
+    const destinationUrl = auth?.user?.role === 'admin' ? '/admin' : '/student';
+
     return (
         <>
-            <Head title="Phase 01 — Project Foundation" />
+            <Head title="AI Career Recommendation System" />
             <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col justify-between selection:bg-blue-500 selection:text-white">
                 {/* Background Accent Gradients */}
                 <div className="fixed inset-0 pointer-events-none overflow-hidden">
@@ -30,10 +34,24 @@ export default function Welcome({ appName, laravelVersion, phpVersion }) {
                                 {appName || 'AI Career Recommendation'}
                             </span>
                         </div>
-                        <span className="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
-                            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 mr-1.5 animate-pulse"></span>
-                            Phase 01: Project Foundation
-                        </span>
+
+                        <div className="flex items-center gap-3">
+                            {auth?.user ? (
+                                <Link
+                                    href={destinationUrl}
+                                    className="px-4 py-2 rounded-lg bg-blue-600 hover:bg-blue-500 text-white text-xs font-semibold shadow-lg shadow-blue-500/20 transition-all"
+                                >
+                                    Go to {auth.user.role === 'admin' ? 'Admin Panel' : 'Student Portal'} →
+                                </Link>
+                            ) : (
+                                <Link
+                                    href="/login"
+                                    className="px-4 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-white text-xs font-semibold border border-slate-700 transition-all"
+                                >
+                                    Sign In
+                                </Link>
+                            )}
+                        </div>
                     </div>
                 </header>
 
@@ -53,9 +71,27 @@ export default function Welcome({ appName, laravelVersion, phpVersion }) {
                         AI Career Recommendation System
                     </h1>
                     
-                    <p className="text-lg text-slate-400 max-w-2xl mx-auto mb-12">
-                        Foundation layer verified. The application is successfully configured with Laravel 12, Inertia.js, React, and Vite.
+                    <p className="text-lg text-slate-400 max-w-2xl mx-auto mb-10">
+                        Intelligent CV analysis, automated skill mapping, and data-driven career recommendations for university students.
                     </p>
+
+                    <div className="flex items-center gap-4 mb-12">
+                        {auth?.user ? (
+                            <Link
+                                href={destinationUrl}
+                                className="px-6 py-3 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white text-sm font-semibold shadow-xl shadow-blue-500/25 transition-all"
+                            >
+                                Open Dashboard ({auth.user.role})
+                            </Link>
+                        ) : (
+                            <Link
+                                href="/login"
+                                className="px-6 py-3 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white text-sm font-semibold shadow-xl shadow-blue-500/25 transition-all"
+                            >
+                                Sign In to Portal
+                            </Link>
+                        )}
+                    </div>
 
                     {/* Stack Verification Grid */}
                     <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-12 text-left">
@@ -78,10 +114,6 @@ export default function Welcome({ appName, laravelVersion, phpVersion }) {
                                 </div>
                             </div>
                         ))}
-                    </div>
-
-                    <div className="p-4 rounded-lg bg-slate-900/30 border border-slate-800/60 text-xs text-slate-400 max-w-xl">
-                        Ready for Phase 02 (Database Foundation & Schema).
                     </div>
                 </main>
 
