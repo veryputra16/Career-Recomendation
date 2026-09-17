@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
+use App\Http\Controllers\Student\StudentDashboardController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -36,17 +38,14 @@ Route::middleware('guest')->group(function () {
 Route::middleware('auth')->group(function () {
     Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
 
-    // Admin Protected Placeholder Route
+    // Admin Protected Dashboard Route
     Route::middleware('role:admin')->group(function () {
-        Route::get('/admin', function () {
-            return Inertia::render('Admin/Dashboard');
-        })->name('admin.dashboard');
+        Route::get('/admin', AdminDashboardController::class)->name('admin.dashboard');
     });
 
-    // Student Protected Placeholder Route
+    // Student Protected Dashboard Route
     Route::middleware('role:student')->group(function () {
-        Route::get('/student', function () {
-            return Inertia::render('Student/Dashboard');
-        })->name('student.dashboard');
+        Route::get('/student', StudentDashboardController::class)->name('student.dashboard');
     });
 });
+
