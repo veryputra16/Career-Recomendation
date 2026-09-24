@@ -1,4 +1,4 @@
-import { Head, usePage } from '@inertiajs/react';
+import { Head, Link, usePage } from '@inertiajs/react';
 import StudentLayout from '@/Layouts/StudentLayout';
 import PageHeader from '@/Components/UI/PageHeader';
 import StatCard from '@/Components/UI/StatCard';
@@ -66,13 +66,24 @@ export default function StudentDashboard({ stats = {} }) {
                         </div>
                     </div>
 
-                    <div className="flex sm:flex-col items-start sm:items-end justify-between border-t sm:border-t-0 border-white/10 pt-3 sm:pt-0">
-                        <span className="text-[11px] text-blue-200 uppercase tracking-wider font-semibold">
-                            Analysis Status
-                        </span>
-                        <span className="text-xs font-semibold px-2.5 py-1 rounded-full bg-white/15 border border-white/20 mt-1">
-                            {stats.has_cv ? 'CV Under Review' : 'Awaiting CV Upload'}
-                        </span>
+                    <div className="flex sm:flex-col items-start sm:items-end justify-between border-t sm:border-t-0 border-white/10 pt-3 sm:pt-0 gap-2">
+                        <div className="text-left sm:text-right">
+                            <span className="text-[11px] text-blue-200 uppercase tracking-wider font-semibold block">
+                                Analysis Status
+                            </span>
+                            <span className="text-xs font-semibold px-2.5 py-1 rounded-full bg-white/15 border border-white/20 mt-1 inline-block">
+                                {stats.has_cv ? 'CV Under Review' : 'Awaiting CV Upload'}
+                            </span>
+                        </div>
+                        <Link
+                            href="/student/profile"
+                            className="inline-flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-lg bg-white text-blue-800 hover:bg-blue-50 transition-colors shadow-xs"
+                        >
+                            <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+                            </svg>
+                            Edit Profile
+                        </Link>
                     </div>
                 </div>
             </div>

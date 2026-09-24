@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Student\StudentDashboardController;
+use App\Http\Controllers\Student\StudentProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -43,9 +44,12 @@ Route::middleware('auth')->group(function () {
         Route::get('/admin', AdminDashboardController::class)->name('admin.dashboard');
     });
 
-    // Student Protected Dashboard Route
+    // Student Protected Routes
     Route::middleware('role:student')->group(function () {
         Route::get('/student', StudentDashboardController::class)->name('student.dashboard');
+        Route::get('/student/profile', [StudentProfileController::class, 'edit'])->name('student.profile');
+        Route::put('/student/profile', [StudentProfileController::class, 'update'])->name('student.profile.update');
     });
 });
+
 
