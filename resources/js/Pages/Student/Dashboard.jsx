@@ -138,28 +138,44 @@ export default function StudentDashboard({ stats = {} }) {
                                     CV Status
                                 </h3>
                             </div>
-                            <span className="text-[10px] font-semibold uppercase px-2 py-0.5 rounded-full bg-slate-100 text-slate-600">
-                                Phase 05
+                            <span className="text-[10px] font-semibold uppercase px-2 py-0.5 rounded-full bg-blue-50 text-blue-700 border border-blue-200">
+                                Active
                             </span>
                         </div>
 
                         {stats.has_cv && stats.latest_cv ? (
-                            <div className="p-4 rounded-xl bg-blue-50/60 border border-blue-100 text-xs space-y-2">
-                                <p className="font-semibold text-blue-900">Current Resume</p>
-                                <p className="text-slate-700 font-mono">{stats.latest_cv.file_name}</p>
-                                <p className="text-slate-500 text-[11px]">Uploaded: {stats.latest_cv.uploaded_at}</p>
+                            <div className="p-4 rounded-xl bg-blue-50/60 border border-blue-100 text-xs space-y-3">
+                                <div>
+                                    <p className="font-semibold text-blue-900">Current Resume</p>
+                                    <p className="text-slate-700 font-mono mt-0.5">{stats.latest_cv.file_name}</p>
+                                    <p className="text-slate-500 text-[11px] mt-0.5">Uploaded: {stats.latest_cv.uploaded_at}</p>
+                                </div>
+                                <Link
+                                    href="/student/cv"
+                                    className="inline-flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-lg bg-blue-600 text-white hover:bg-blue-700 transition-colors shadow-xs"
+                                >
+                                    Manage CV & View Text
+                                </Link>
                             </div>
                         ) : (
                             <EmptyState
                                 title="No CV uploaded yet"
                                 description="Upload your curriculum vitae in PDF format to initiate the automated career evaluation pipeline."
                                 status="Pending Upload"
+                                action={
+                                    <Link
+                                        href="/student/cv"
+                                        className="inline-flex items-center gap-1.5 text-xs font-semibold px-3.5 py-1.5 rounded-lg bg-blue-600 text-white hover:bg-blue-700 transition-colors shadow-xs"
+                                    >
+                                        Upload CV
+                                    </Link>
+                                }
                             />
                         )}
                     </div>
 
                     <p className="mt-4 text-[11px] text-slate-400 text-center">
-                        CV upload and text extraction will be enabled in Phase 05.
+                        CV upload and text extraction are fully active.
                     </p>
                 </div>
 

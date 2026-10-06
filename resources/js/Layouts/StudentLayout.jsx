@@ -119,7 +119,7 @@ export default function StudentLayout({ title = 'Student Portal', children }) {
                                     Career Journey
                                 </div>
                                 <div className="space-y-1">
-                                    <NavLink href="#" icon={UploadCvIcon} disabled badge="Phase 06">
+                                    <NavLink href="/student/cv" icon={UploadCvIcon}>
                                         Upload CV
                                     </NavLink>
                                     <NavLink href="#" icon={SkillsIcon} disabled badge="Phase 07">
