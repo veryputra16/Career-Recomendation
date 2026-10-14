@@ -44,6 +44,25 @@ class CVController extends Controller
                 'processed_at' => $cv->processed_at?->format('Y-m-d H:i'),
             ]);
 
+        $studentSkills = $student->skills()
+            ->withPivot('confidence_score', 'proficiency_level', 'source')
+            ->orderByPivot('confidence_score', 'desc')
+            ->get()
+            ->map(fn ($skill) => [
+                'id' => $skill->id,
+                'name' => $skill->name,
+                'slug' => $skill->slug,
+                'category' => $skill->category,
+                'description' => $skill->description,
+                'confidence_score' => $skill->pivot->confidence_score,
+                'proficiency_level' => $skill->pivot->proficiency_level,
+                'source' => $skill->pivot->source,
+            ]);
+
+        $latestAnalysis = $student->cvAnalysisHistories()
+            ->latest('id')
+            ->first();
+
         return Inertia::render('Student/CV/Index', [
             'currentCv' => $latestCv ? [
                 'id' => $latestCv->id,
@@ -55,6 +74,17 @@ class CVController extends Controller
                 'processed_at' => $latestCv->processed_at?->format('Y-m-d H:i'),
             ] : null,
             'history' => $history,
+            'studentSkills' => $studentSkills,
+            'latestAnalysis' => $latestAnalysis ? [
+                'id' => $latestAnalysis->id,
+                'cv_upload_id' => $latestAnalysis->cv_upload_id,
+                'analysis_version' => $latestAnalysis->analysis_version,
+                'status' => $latestAnalysis->status,
+                'summary' => $latestAnalysis->summary,
+                'raw_result' => $latestAnalysis->raw_result,
+                'analyzed_at' => $latestAnalysis->analyzed_at?->format('Y-m-d H:i'),
+            ] : null,
+            'extractionResult' => session('extraction_result'),
         ]);
     }
 

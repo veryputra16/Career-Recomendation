@@ -17,25 +17,34 @@ class CVUploadTest extends TestCase
 
     protected function getSamplePdfContent(string $text = 'John Doe - Senior Software Engineer'): string
     {
-        $length = strlen($text) + 20;
+        $streamContent = "BT\n/F1 12 Tf\n50 700 Td\n({$text}) Tj\nET\n";
+        $streamLen = strlen($streamContent);
 
-        return "%PDF-1.4\n"
-            . "1 0 obj << /Type /Catalog /Pages 2 0 R >> endobj\n"
-            . "2 0 obj << /Type /Pages /Kids [3 0 R] /Count 1 >> endobj\n"
-            . "3 0 obj << /Type /Page /Parent 2 0 R /Resources << /Font << /F1 4 0 R >> >> /MediaBox [0 0 612 792] /Contents 5 0 R >> endobj\n"
-            . "4 0 obj << /Type /Font /Subtype /Type1 /BaseFont /Helvetica >> endobj\n"
-            . "5 0 obj << /Length {$length} >> stream\n"
-            . "BT\n/F1 12 Tf\n50 700 Td\n({$text}) Tj\nET\n"
-            . "endstream endobj\n"
-            . "xref\n0 6\n"
+        $obj1 = "1 0 obj\n<< /Type /Catalog /Pages 2 0 R >>\nendobj\n";
+        $obj2 = "2 0 obj\n<< /Type /Pages /Kids [3 0 R] /Count 1 >>\nendobj\n";
+        $obj3 = "3 0 obj\n<< /Type /Page /Parent 2 0 R /Resources << /Font << /F1 4 0 R >> >> /MediaBox [0 0 612 792] /Contents 5 0 R >>\nendobj\n";
+        $obj4 = "4 0 obj\n<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>\nendobj\n";
+        $obj5 = "5 0 obj\n<< /Length {$streamLen} >>\nstream\n{$streamContent}endstream\nendobj\n";
+
+        $header = "%PDF-1.4\n";
+        $off1 = strlen($header);
+        $off2 = $off1 + strlen($obj1);
+        $off3 = $off2 + strlen($obj2);
+        $off4 = $off3 + strlen($obj3);
+        $off5 = $off4 + strlen($obj4);
+        $xrefOffset = $off5 + strlen($obj5);
+
+        $xref = "xref\n0 6\n"
             . "0000000000 65535 f \n"
-            . "0000000009 00000 n \n"
-            . "0000000058 00000 n \n"
-            . "0000000115 00000 n \n"
-            . "0000000236 00000 n \n"
-            . "0000000305 00000 n \n"
-            . "trailer << /Size 6 /Root 1 0 R >>\n"
-            . "startxref\n450\n%%EOF\n";
+            . sprintf("%010d 00000 n \n", $off1)
+            . sprintf("%010d 00000 n \n", $off2)
+            . sprintf("%010d 00000 n \n", $off3)
+            . sprintf("%010d 00000 n \n", $off4)
+            . sprintf("%010d 00000 n \n", $off5);
+
+        $trailer = "trailer\n<< /Size 6 /Root 1 0 R >>\nstartxref\n{$xrefOffset}\n%%EOF\n";
+
+        return $header . $obj1 . $obj2 . $obj3 . $obj4 . $obj5 . $xref . $trailer;
     }
 
     public function test_unauthenticated_user_cannot_access_cv_management(): void

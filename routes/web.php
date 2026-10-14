@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Student\CVController;
+use App\Http\Controllers\Student\SkillExtractionController;
 use App\Http\Controllers\Student\StudentDashboardController;
 use App\Http\Controllers\Student\StudentProfileController;
 use Illuminate\Foundation\Application;
@@ -51,10 +52,11 @@ Route::middleware('auth')->group(function () {
         Route::get('/student/profile', [StudentProfileController::class, 'edit'])->name('student.profile');
         Route::put('/student/profile', [StudentProfileController::class, 'update'])->name('student.profile.update');
 
-        // CV Management Routes
+        // CV Management & Skill Extraction Routes
         Route::get('/student/cv', [CVController::class, 'index'])->name('student.cv');
         Route::post('/student/cv', [CVController::class, 'store'])->name('student.cv.store');
         Route::get('/student/cv/{cvUpload}/download', [CVController::class, 'download'])->name('student.cv.download');
+        Route::post('/student/cv/{cvUpload}/extract-skills', [SkillExtractionController::class, 'store'])->name('student.cv.extract-skills');
     });
 });
 

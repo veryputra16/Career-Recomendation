@@ -566,11 +566,11 @@ Document known limitations.
 
 ## TASK-060 — Define Skill Database
 
-Status: [ ]
+Status: [x]
 
 Create:
 
-
+```text
 skills
 student_skills
 ```
@@ -581,12 +581,13 @@ or the final normalized structure defined in `DATABASE.md`.
 
 ## TASK-061 — Skill Seeder / Initial Dataset
 
-Status: [ ]
+Status: [x]
 
 Create initial skill dataset.
 
 Examples:
 
+```text
 PHP
 Laravel
 React
@@ -601,7 +602,6 @@ AWS
 Communication
 Leadership
 Problem Solving
-
 ```
 
 The final dataset should be expanded according to project requirements.
@@ -610,7 +610,7 @@ The final dataset should be expanded according to project requirements.
 
 ## TASK-062 — AI Service Foundation
 
-Status: [ ]
+Status: [x]
 
 Create generic AI service.
 
@@ -629,13 +629,13 @@ Do not implement career recommendation yet.
 
 ## TASK-063 — Skill Extraction Prompt
 
-Status: [ ]
+Status: [x]
 
 Create the skill extraction prompt.
 
 Input:
 
-
+```text
 Extracted CV Text
 ```
 
@@ -656,17 +656,17 @@ Expected output:
 
 ## TASK-064 — Skill Extraction Service
 
-Status: [ ]
+Status: [x]
 
 Create:
 
+```text
 SkillExtractionService
-
 ```
 
 Flow:
 
-
+```text
 CV Text
    ↓
 AI
@@ -684,7 +684,7 @@ Database
 
 ## TASK-065 — Skill Normalization
 
-Status: [ ]
+Status: [x]
 
 Normalize AI output against the skill database.
 
@@ -699,7 +699,7 @@ Handle:
 
 ## TASK-066 — Skill Extraction UI
 
-Status: [ ]
+Status: [x]
 
 Student should be able to see:
 
@@ -711,7 +711,7 @@ Student should be able to see:
 
 ## TASK-067 — Skill Extraction Testing
 
-Status: [ ]
+Status: [x]
 
 Test using multiple CV samples.
 

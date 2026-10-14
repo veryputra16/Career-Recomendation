@@ -104,7 +104,7 @@ export default function StudentDashboard({ stats = {} }) {
                     description="Extracted technical competencies"
                     icon={SkillIcon}
                     variant="indigo"
-                    badge="Phase 07"
+                    badge={stats.skills_count > 0 ? 'Verified' : 'Pending'}
                 />
                 <StatCard
                     title="Career Recommendations"
@@ -179,7 +179,7 @@ export default function StudentDashboard({ stats = {} }) {
                     </p>
                 </div>
 
-                {/* Skills Analysis Section */}
+                {/* Skills Analysis Section (Phase 07) */}
                 <div className="bg-white rounded-2xl border border-slate-200 p-6 shadow-xs flex flex-col justify-between">
                     <div>
                         <div className="flex items-center justify-between pb-3 border-b border-slate-100 mb-4">
@@ -191,20 +191,69 @@ export default function StudentDashboard({ stats = {} }) {
                                     Skills Identified
                                 </h3>
                             </div>
-                            <span className="text-[10px] font-semibold uppercase px-2 py-0.5 rounded-full bg-slate-100 text-slate-600">
-                                Phase 07
+                            <span
+                                className={`text-[10px] font-semibold uppercase px-2 py-0.5 rounded-full ${
+                                    stats.skills_count > 0
+                                        ? 'bg-emerald-50 text-emerald-700 border border-emerald-200'
+                                        : 'bg-blue-50 text-blue-700 border border-blue-200'
+                                }`}
+                            >
+                                {stats.skills_count > 0 ? `${stats.skills_count} Verified` : 'Active'}
                             </span>
                         </div>
 
-                        <EmptyState
-                            title="No skills analyzed yet"
-                            description="Skills will be automatically extracted, categorized, and scored by AI once your CV is uploaded and processed."
-                            status="Awaiting Analysis"
-                        />
+                        {stats.skills_count > 0 ? (
+                            <div className="space-y-3">
+                                <p className="text-xs text-slate-600">
+                                    AI has extracted and matched the following competencies from your CV:
+                                </p>
+                                <div className="flex flex-wrap gap-1.5">
+                                    {(stats.recent_skills || []).map((skill) => (
+                                        <span
+                                            key={skill.id}
+                                            className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-indigo-50/70 border border-indigo-200 text-indigo-900 text-xs font-semibold"
+                                        >
+                                            {skill.name}
+                                            {skill.confidence_score && (
+                                                <span className="text-[10px] text-indigo-500 font-mono">
+                                                    {Math.round(skill.confidence_score <= 1 ? skill.confidence_score * 100 : skill.confidence_score)}%
+                                                </span>
+                                            )}
+                                        </span>
+                                    ))}
+                                </div>
+                                <div className="pt-2">
+                                    <Link
+                                        href="/student/cv"
+                                        className="inline-flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-lg bg-indigo-600 text-white hover:bg-indigo-700 transition-colors shadow-xs"
+                                    >
+                                        Manage & Re-extract Skills
+                                    </Link>
+                                </div>
+                            </div>
+                        ) : (
+                            <EmptyState
+                                title="No skills analyzed yet"
+                                description={
+                                    stats.has_cv
+                                        ? "Your CV is uploaded and ready! Run skill extraction to identify and score your technical profile."
+                                        : "Upload your CV in PDF format to automatically extract and score your skills."
+                                }
+                                status={stats.has_cv ? "Ready for Extraction" : "Awaiting CV"}
+                                action={
+                                    <Link
+                                        href="/student/cv"
+                                        className="inline-flex items-center gap-1.5 text-xs font-semibold px-3.5 py-1.5 rounded-lg bg-indigo-600 text-white hover:bg-indigo-700 transition-colors shadow-xs"
+                                    >
+                                        {stats.has_cv ? 'Extract Skills' : 'Upload CV'}
+                                    </Link>
+                                }
+                            />
+                        )}
                     </div>
 
                     <p className="mt-4 text-[11px] text-slate-400 text-center">
-                        AI skill extraction and normalization will activate in Phase 07.
+                        AI skill extraction and normalization is active.
                     </p>
                 </div>
 
