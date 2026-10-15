@@ -222,12 +222,18 @@ export default function StudentDashboard({ stats = {} }) {
                                         </span>
                                     ))}
                                 </div>
-                                <div className="pt-2">
+                                <div className="pt-2 flex flex-wrap items-center gap-2">
                                     <Link
-                                        href="/student/cv"
+                                        href="/student/skills"
                                         className="inline-flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-lg bg-indigo-600 text-white hover:bg-indigo-700 transition-colors shadow-xs"
                                     >
-                                        Manage & Re-extract Skills
+                                        View Full Analysis
+                                    </Link>
+                                    <Link
+                                        href="/student/cv"
+                                        className="inline-flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-lg bg-white border border-slate-200 text-slate-700 hover:bg-slate-50 transition-colors shadow-xs"
+                                    >
+                                        Manage CV
                                     </Link>
                                 </div>
                             </div>

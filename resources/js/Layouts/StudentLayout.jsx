@@ -122,10 +122,10 @@ export default function StudentLayout({ title = 'Student Portal', children }) {
                                     <NavLink href="/student/cv" icon={UploadCvIcon}>
                                         Upload CV
                                     </NavLink>
-                                    <NavLink href="#" icon={SkillsIcon} disabled badge="Phase 07">
+                                    <NavLink href="/student/skills" icon={SkillsIcon}>
                                         My Skills
                                     </NavLink>
-                                    <NavLink href="#" icon={CareerIcon} disabled badge="Phase 08">
+                                    <NavLink href="#" icon={CareerIcon} disabled badge="Phase 09">
                                         Recommendations
                                     </NavLink>
                                     <NavLink href="#" icon={JobsIcon} disabled badge="Phase 10">
@@ -146,7 +146,7 @@ export default function StudentLayout({ title = 'Student Portal', children }) {
                                 Student Career Hub
                             </p>
                             <p className="text-[10px] text-blue-700 mt-0.5">
-                                Phase 04 Active • Application Shell
+                                Phase 08 Active • Skill Analysis
                             </p>
                         </div>
                     </div>

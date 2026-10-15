@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Student\CVController;
+use App\Http\Controllers\Student\SkillAnalysisController;
 use App\Http\Controllers\Student\SkillExtractionController;
 use App\Http\Controllers\Student\StudentDashboardController;
 use App\Http\Controllers\Student\StudentProfileController;
@@ -57,6 +58,9 @@ Route::middleware('auth')->group(function () {
         Route::post('/student/cv', [CVController::class, 'store'])->name('student.cv.store');
         Route::get('/student/cv/{cvUpload}/download', [CVController::class, 'download'])->name('student.cv.download');
         Route::post('/student/cv/{cvUpload}/extract-skills', [SkillExtractionController::class, 'store'])->name('student.cv.extract-skills');
+
+        // Skill Analysis Route (Phase 08)
+        Route::get('/student/skills', [SkillAnalysisController::class, 'index'])->name('student.skills');
     });
 });
 
